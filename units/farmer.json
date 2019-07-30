@@ -1,0 +1,13 @@
+{
+  "name": "farmer",
+  "texture_name": "farmer.png",
+  "attributes" : {
+    "speed" : 1.5,
+    "strength": 15,
+    "health": 20,
+    "value": 30,
+    "specials": {
+      
+    }
+  }
+}

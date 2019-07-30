@@ -1,0 +1,22 @@
+{
+  "name": "Archer tower",
+  "description": "A tower with not so friendly archers who fire rapid quantities of arrows",
+  "texture_name": "archer-tower.png",
+  "attributes": {
+    "rate_of_fire": 1.0,
+    "cost": 1500,
+    "range": 2.0,
+    "min_range": 0,
+    "projectile": {
+      "texture_name": "arrow.png",
+      "damage": 16.0,
+      "speed": 1.2,
+      "splash_area": 1.0,
+      "lifetime": 20.0, 
+      "mod_time": 3.0,
+      "speed_mod": 1.0,
+      "damage_mod": 1.0,
+      "value_mod": 1.0
+    }
+  }
+}

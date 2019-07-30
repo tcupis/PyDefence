@@ -1,0 +1,24 @@
+{
+  "name": "knight",
+  "texture_name": "knight.png",
+  "attributes" : {
+    "speed" : 0.9,
+    "strength": 300,
+    "health": 400,
+    "value": 230,
+    "specials": {
+      "speed_boost": {
+        "duration": 10,
+        "delay_range": [0,10],
+        "chance": 0.05,
+        "modifier": 2
+      },
+      "value_boost": {
+        "duration": 10,
+        "delay_range": [0,10],
+        "chance": 0.05,
+        "modifier": 0.5
+      }
+    }
+  }
+}

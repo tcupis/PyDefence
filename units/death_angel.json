@@ -1,0 +1,24 @@
+{
+  "name": "death angel",
+  "texture_name": "death-angel.png",
+  "attributes" : {
+    "speed" : 0.9,
+    "strength": 12000,
+    "health": 14000,
+    "value": 3500,
+    "specials": {
+      "speed_boost": {
+        "duration": 10,
+        "delay_range": [0,10],
+        "chance": 0.05,
+        "modifier": 2
+      },
+      "value_boost": {
+        "duration": 10,
+        "delay_range": [0,10],
+        "chance": 0.05,
+        "modifier": 0.5
+      }
+    }
+  }
+}

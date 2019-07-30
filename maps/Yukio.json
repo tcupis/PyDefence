@@ -1,0 +1,225 @@
+{
+  "map_difficulty": 1.7026457567561801,
+  "map_size": 6,
+  "name": "Yukio",
+  "texture": "default_texture",
+  "tiles": [
+    {
+      "tag": "x0y0",
+      "texture": "MAP_DECO_ROCK_1",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "tag": "x0y1",
+      "texture": "MAP_DECO_GRASS",
+      "x": 0,
+      "y": 1
+    },
+    {
+      "tag": "x0y2",
+      "texture": "MAP_DECO_GRASS",
+      "x": 0,
+      "y": 2
+    },
+    {
+      "tag": "x0y3",
+      "texture": "MAP_DECO_GRASS",
+      "x": 0,
+      "y": 3
+    },
+    {
+      "tag": "x0y4",
+      "texture": "MAP_DECO_ROCK_2",
+      "x": 0,
+      "y": 4
+    },
+    {
+      "tag": "x0y5",
+      "texture": "MAP_DECO_ROCK_1",
+      "x": 0,
+      "y": 5
+    },
+    {
+      "tag": "x1y0",
+      "texture": "MAP_DECO_GRASS",
+      "x": 1,
+      "y": 0
+    },
+    {
+      "tag": "x1y1",
+      "texture": "MAP_PATH_TL",
+      "x": 1,
+      "y": 1
+    },
+    {
+      "tag": "x1y2",
+      "texture": "MAP_PATH_Y",
+      "x": 1,
+      "y": 2
+    },
+    {
+      "tag": "x1y3",
+      "texture": "MAP_PATH_Y",
+      "x": 1,
+      "y": 3
+    },
+    {
+      "tag": "x1y4",
+      "texture": "MAP_PATH_Y",
+      "x": 1,
+      "y": 4
+    },
+    {
+      "tag": "x1y5",
+      "texture": "MAP_START_PTR",
+      "x": 1,
+      "y": 5
+    },
+    {
+      "tag": "x2y0",
+      "texture": "MAP_DECO_GRASS",
+      "x": 2,
+      "y": 0
+    },
+    {
+      "tag": "x2y1",
+      "texture": "MAP_PATH_X",
+      "x": 2,
+      "y": 1
+    },
+    {
+      "tag": "x2y2",
+      "texture": "MAP_DECO_GRASS",
+      "x": 2,
+      "y": 2
+    },
+    {
+      "tag": "x2y3",
+      "texture": "MAP_DECO_GRASS",
+      "x": 2,
+      "y": 3
+    },
+    {
+      "tag": "x2y4",
+      "texture": "MAP_DECO_WELL",
+      "x": 2,
+      "y": 4
+    },
+    {
+      "tag": "x2y5",
+      "texture": "MAP_DECO_HUT",
+      "x": 2,
+      "y": 5
+    },
+    {
+      "tag": "x3y0",
+      "texture": "MAP_DECO_GRASS",
+      "x": 3,
+      "y": 0
+    },
+    {
+      "tag": "x3y1",
+      "texture": "MAP_PATH_TR",
+      "x": 3,
+      "y": 1
+    },
+    {
+      "tag": "x3y2",
+      "texture": "MAP_PATH_Y",
+      "x": 3,
+      "y": 2
+    },
+    {
+      "tag": "x3y3",
+      "texture": "MAP_PATH_Y",
+      "x": 3,
+      "y": 3
+    },
+    {
+      "tag": "x3y4",
+      "texture": "MAP_PATH_BL",
+      "x": 3,
+      "y": 4
+    },
+    {
+      "tag": "x3y5",
+      "texture": "MAP_DECO_GRASS",
+      "x": 3,
+      "y": 5
+    },
+    {
+      "tag": "x4y0",
+      "texture": "MAP_DECO_FARM_1",
+      "x": 4,
+      "y": 0
+    },
+    {
+      "tag": "x4y1",
+      "texture": "MAP_DECO_GRASS",
+      "x": 4,
+      "y": 1
+    },
+    {
+      "tag": "x4y2",
+      "texture": "MAP_DECO_GRASS",
+      "x": 4,
+      "y": 2
+    },
+    {
+      "tag": "x4y3",
+      "texture": "MAP_DECO_GRASS",
+      "x": 4,
+      "y": 3
+    },
+    {
+      "tag": "x4y4",
+      "texture": "MAP_PATH_X",
+      "x": 4,
+      "y": 4
+    },
+    {
+      "tag": "x4y5",
+      "texture": "MAP_DECO_GRASS",
+      "x": 4,
+      "y": 5
+    },
+    {
+      "tag": "x5y0",
+      "texture": "MAP_END_PTR",
+      "x": 5,
+      "y": 0
+    },
+    {
+      "tag": "x5y1",
+      "texture": "MAP_PATH_Y",
+      "x": 5,
+      "y": 1
+    },
+    {
+      "tag": "x5y2",
+      "texture": "MAP_PATH_Y",
+      "x": 5,
+      "y": 2
+    },
+    {
+      "tag": "x5y3",
+      "texture": "MAP_PATH_Y",
+      "x": 5,
+      "y": 3
+    },
+    {
+      "tag": "x5y4",
+      "texture": "MAP_PATH_BR",
+      "x": 5,
+      "y": 4
+    },
+    {
+      "tag": "x5y5",
+      "texture": "MAP_DECO_FARM_3",
+      "x": 5,
+      "y": 5
+    }
+  ],
+  "valid_path": "1.5/1.4/1.3/1.2/1.1/2.1/3.1/3.2/3.3/3.4/4.4/5.4/5.3/5.2/5.1/5.0/"
+}

@@ -1,0 +1,24 @@
+{
+  "name": "knight horse",
+  "texture_name": "knight-horse.png",
+  "attributes" : {
+    "speed" : 2.0,
+    "strength": 800,
+    "health": 500,
+    "value": 400,
+    "specials": {
+      "speed_boost": {
+        "duration": 10,
+        "delay_range": [0,10],
+        "chance": 0.05,
+        "modifier": 2
+      },
+      "value_boost": {
+        "duration": 10,
+        "delay_range": [0,10],
+        "chance": 0.05,
+        "modifier": 0.5
+      }
+    }
+  }
+}

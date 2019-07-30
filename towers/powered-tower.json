@@ -1,0 +1,22 @@
+{
+  "name": "Powered tower",
+  "description": "A tower that produces powerful red light",
+  "texture_name": "powered-tower.png",
+  "attributes": {
+    "rate_of_fire": 0.7,
+    "cost": 40000,
+    "range": 4.0,
+    "min_range": 0,
+    "projectile": {
+      "texture_name": "red-light.png",
+      "damage": 450.0,
+      "speed": 1.0,
+      "splash_area": 1.0,
+      "lifetime": 20.0, 
+      "mod_time": 3.0,
+      "speed_mod": 1.0,
+      "damage_mod": 1.0,
+      "value_mod": 1.0
+    }
+  }
+}

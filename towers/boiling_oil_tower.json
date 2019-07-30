@@ -1,0 +1,22 @@
+{
+  "name": "Boiling oil",
+  "description": "A tower that produces scalding oil to melt enemies like butter on a stove",
+  "texture_name": "oil-tower.png",
+  "attributes": {
+    "rate_of_fire": 0.7,
+    "cost": 6000,
+    "range": 0.8,
+    "min_range": 0,
+    "projectile": {
+      "texture_name": "oil-projectile.png",
+      "damage": 250.0,
+      "speed": 0.9,
+      "splash_area": 1.0,
+      "lifetime": 20.0, 
+      "mod_time": 3.0,
+      "speed_mod": 1.0,
+      "damage_mod": 1.0,
+      "value_mod": 1.0
+    }
+  }
+}

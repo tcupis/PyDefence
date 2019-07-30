@@ -1,0 +1,24 @@
+{
+  "name": "hardened farmer",
+  "texture_name": "hardened-farmer.png",
+  "attributes" : {
+    "speed" : 1.2,
+    "strength": 50,
+    "health": 60,
+    "value": 60,
+    "specials": {
+      "speed_boost": {
+        "duration": 10,
+        "delay_range": [0,10],
+        "chance": 0.05,
+        "modifier": 2
+      },
+      "value_boost": {
+        "duration": 10,
+        "delay_range": [0,10],
+        "chance": 0.05,
+        "modifier": 0.5
+      }
+    }
+  }
+}

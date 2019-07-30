@@ -1,0 +1,22 @@
+{
+  "name": "Mortar tower",
+  "description": "A tower launches high altitude steel balls to squash incoming units",
+  "texture_name": "mortar-tower.png",
+  "attributes": {
+    "rate_of_fire": 0.5,
+    "cost": 5500,
+    "range": 5.5,
+    "min_range": 1.5,
+    "projectile": {
+      "texture_name": "steel-ball.png",
+      "damage": 60.0,
+      "speed": 0.6,
+      "splash_area": 1.0,
+      "lifetime": 20.0, 
+      "mod_time": 3.0,
+      "speed_mod": 1.0,
+      "damage_mod": 1.0,
+      "value_mod": 1.0
+    }
+  }
+}

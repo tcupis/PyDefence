@@ -1,0 +1,22 @@
+{
+  "name": "Beacon tower",
+  "description": "A tower that produces powerful beams of light",
+  "texture_name": "beacon-tower.png",
+  "attributes": {
+    "rate_of_fire": 1.0,
+    "cost": 9000,
+    "range": 3.5,
+    "min_range": 0,
+    "projectile": {
+      "texture_name": "light-ball.png",
+      "damage": 60.0,
+      "speed": 1.2,
+      "splash_area": 1.0,
+      "lifetime": 20.0, 
+      "mod_time": 3.0,
+      "speed_mod": 1.0,
+      "damage_mod": 1.0,
+      "value_mod": 1.0
+    }
+  }
+}
