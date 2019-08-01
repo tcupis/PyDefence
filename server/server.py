@@ -49,7 +49,7 @@ class DistributionServer():
         self.BACKLOG_LEN = 64
         self.EOMT_ID = "\EOMT;;"
         self.buffer_size = 1024
-        self.live = True
+        self.live = False
         self.clients = {}
         self.active_lobbies = {}
 
@@ -57,16 +57,22 @@ class DistributionServer():
         #Start the server and bind application to a socket object
         self.SocketObject = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         
-        try:
-            self.SocketObject.bind(self.address)
-        except OSError:
-            #Handles binding to a used port
-            print("Server already running on that port")
-            quit()
+        while not self.live:
+            try:
+                self.SocketObject.bind(self.address)
+            except Exception as e:
+                #Handles socket binding errors
+                print("Server startup error: \n\t{}".format(e))
 
-        self.SocketObject.listen(self.BACKLOG_LEN) #queues connections
+                #Retry server startup
+                time.sleep(30)
+                continue
 
-        print("Server started!", self.address)
+            self.SocketObject.listen(self.BACKLOG_LEN) #queues connections
+
+            print("Server started!", self.address)
+
+            self.live = True
 
         #Handles pending connections in the queue starting threads for handshakes
         while self.live:
@@ -293,7 +299,7 @@ class DistributionServer():
 class ServerGUI():
     def __init__(self):
         #Create server object
-        self.ds = DistributionServer("PYD_DS_UK_01", ("192.168.1.95", 1000))
+        self.ds = DistributionServer("PYD_DS_UK_01", ("localhost", 1000))
         self.root = tk.Tk()
 
         #Server UI
@@ -301,25 +307,30 @@ class ServerGUI():
         self.root.attributes("-topmost", 1)
         self.root.title("PYD Server Manager")
 
-        tk.Label(self.root, text="Clients connected").grid(row=0, column=0)
+
+        tk.Frame(self.root, width=600, height=10).grid(row=0, column=0, columnspan=3, sticky=tk.N)
+
+        self.status_bar = tk.Frame(self.root, bg="grey", width=600, height=3)
+        self.status_bar.grid(row=0, column=0, columnspan=3, sticky=tk.N)
+        
+        tk.Label(self.root, text="Clients connected").grid(row=1, column=0)
         self.clients_ds = tk.Listbox(self.root, width=25, height=30)
-        self.clients_ds.grid(row=1, column=0)
+        self.clients_ds.grid(row=2, column=0)
         self.total_clients_ds = tk.Label(self.root, text="Total: 0")
-        self.total_clients_ds.grid(row=2, column=0)
+        self.total_clients_ds.grid(row=3, column=0)
 
-        tk.Label(self.root, text="Clients in-game").grid(row=0, column=1)
+        tk.Label(self.root, text="Clients in-game").grid(row=1, column=1)
         self.clients_game = tk.Listbox(self.root, width=40, height=30)
-        self.clients_game.grid(row=1, column=1)
+        self.clients_game.grid(row=2, column=1)
         self.total_clients_game = tk.Label(self.root, text="Total: 0")
-        self.total_clients_game.grid(row=2, column=1)
+        self.total_clients_game.grid(row=3, column=1)
 
-        tk.Label(self.root, text="Lobby Servers").grid(row=0, column=2)
+        tk.Label(self.root, text="Lobby Servers").grid(row=1, column=2)
         self.lobbies_live = tk.Listbox(self.root, width=30, height=30)
-        self.lobbies_live.grid(row=1, column=2)
+        self.lobbies_live.grid(row=2, column=2)
         self.total_lobbies = tk.Label(self.root, text="Total: 0")
-        self.total_lobbies.grid(row=2, column=2)
+        self.total_lobbies.grid(row=3, column=2)
 
-        tk.Label(self.root, text="Online | {}".format(self.ds.name), bg="limegreen", fg="white").grid(row=3, column=0, columnspan=3, sticky=tk.W)
 
         #Launch variable monitor
         thr.start_new_thread(self.guiManager, ())
@@ -330,6 +341,13 @@ class ServerGUI():
 
         #While the program is live update the UI with the state of the variables
         while True:
+
+            #Update status label
+            if self.ds.live:
+                self.status_bar.config(bg="limegreen")
+            else:
+                self.status_bar.config(bg="red")
+
             #Clear listboxes
             self.clients_ds.delete(0, tk.END)
             self.clients_game.delete(0, tk.END)
