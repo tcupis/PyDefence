@@ -20,10 +20,11 @@ import string
 try:
     import tkinter as tk
     import _thread as thr
+    import configparser as cp
 except:
     #Writing logs if import fails
     temp_file = open("FATAL-SERVER-LAUNCH-{}.txt".format(random.randint(0,10**10)), 'w')
-    temp_file.write("A fatal launch error occurred, ensure you have the required packages\n\nGet required packages:\n\t-_thread\n\t-tkinter")
+    temp_file.write("A fatal launch error occurred, ensure you have the required packages\n\nGet required packages:\n\t-_thread\n\t-tkinter\n\t-configparser")
     temp_file.close()
 
     quit()
@@ -298,14 +299,20 @@ class DistributionServer():
 
 class ServerGUI():
     def __init__(self):
+        #Get server config settings
+        parser = cp.ConfigParser()
+        parser.read('server/server.cfg')
+
+        server_name = parser.get('settings', 'server_name')
+
         #Create server object
-        self.ds = DistributionServer("PYD_DS_UK_01", ("localhost", 1000))
+        self.ds = DistributionServer(server_name, ("localhost", 1000))
         self.root = tk.Tk()
 
         #Server UI
         self.root.resizable(0,0)
-        self.root.attributes("-topmost", 1)
-        self.root.title("PYD Server Manager")
+        self.root.attributes("-topmost", parser.get('settings', 'window_topmost'))
+        self.root.title("PYD Server Manager | {}".format(self.ds.name))
 
 
         tk.Frame(self.root, width=600, height=10).grid(row=0, column=0, columnspan=3, sticky=tk.N)
