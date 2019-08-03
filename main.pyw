@@ -49,9 +49,14 @@ class App:
             self.root.attributes("-fullscreen", True)
             SCREEN_WIDTH = self.root.winfo_screenwidth()
             SCREEN_HEIGHT = self.root.winfo_screenheight()
+
+            self.pyd.RESOLUTION = [self.root.winfo_screenwidth(), self.root.winfo_screenheight()]
+            
         else:
             SCREEN_WIDTH = self.pyd.RESOLUTION[0]
             SCREEN_HEIGHT = self.pyd.RESOLUTION[1]
+
+        self.prev_resolution = self.pyd.RESOLUTION
 
         self.root.geometry("{}x{}+{}+{}".format(SCREEN_WIDTH, SCREEN_HEIGHT, abs(self.root.winfo_screenwidth()-SCREEN_WIDTH)//2, abs(self.root.winfo_screenheight()-SCREEN_HEIGHT)//2))
 
@@ -262,8 +267,7 @@ class App:
         try:
             self.resolution_ptr = self.pyd.WINDOW_RESOLUTIONS.index(self.pyd.RESOLUTION)
         except ValueError:
-            self.resetToDefaults()
-            self.saveSettings()
+            self.resolution_ptr = 0
 
         self.title_canvas.create_text((self.pyd.calc_width*34)//64, (self.pyd.calc_height*11)//36, text="Screen resolution", fill="white", font=(self.pyd.default_font, self.pyd.fontScale(24)), tag=("CONTENT_PANEL", "SETTINGS_PANEL"))
         self.title_canvas.create_text((self.pyd.calc_width*34)//64, (self.pyd.calc_height*13)//36, text="{}x{}".format(self.pyd.RESOLUTION[0], self.pyd.RESOLUTION[1]), fill="white", font=(self.pyd.default_font, self.pyd.fontScale(20)), tag=("CONTENT_PANEL", "SETTINGS_PANEL", "RESOLUTION"))
@@ -418,6 +422,9 @@ class App:
         #Hide all panels bar the main & content panels
         self.displayDefault()
         self.title_canvas.itemconfigure(panel, state="normal")
+        if self.fullscreen_toggle:
+            self.title_canvas.itemconfigure("PREV_RESOLUTION", state="hidden")
+            self.title_canvas.itemconfigure("NEXT_RESOLUTION", state="hidden")
 
     def displayGMDetails(self, panel, event=""):
         if event != "": # log event info
@@ -573,10 +580,26 @@ class App:
         #Toggle fullscreen setting
         if not self.fullscreen_toggle:
             self.fullscreen_toggle = True
-            self.title_canvas.itemconfigure("FULLSCREEN_CHECKBOX", image=self.pyd.FULLSCREEN_ON)#update UI
+            self.title_canvas.itemconfigure("NEXT_RESOLUTION", state="hidden")
+            self.title_canvas.itemconfigure("PREV_RESOLUTION", state="hidden")
+            
+            self.title_canvas.itemconfigure("RESOLUTION", text="{}x{}".format(self.root.winfo_screenwidth(), self.root.winfo_screenheight()))
+            self.title_canvas.itemconfigure("FULLSCREEN_CHECKBOX", image=self.pyd.FULLSCREEN_ON)
+
+            self.prev_resolution = self.pyd.RESOLUTION
+            self.pyd.RESOLUTION = [self.root.winfo_screenwidth(), self.root.winfo_screenheight()]
+
         else:
             self.fullscreen_toggle = False
-            self.title_canvas.itemconfigure("FULLSCREEN_CHECKBOX", image=self.pyd.CHECKBOX_BLANK)#update UI
+            self.pyd.RESOLUTION = self.prev_resolution
+
+            self.title_canvas.itemconfigure("NEXT_RESOLUTION", state="normal")
+            self.title_canvas.itemconfigure("PREV_RESOLUTION", state="normal")
+
+            self.title_canvas.itemconfigure("RESOLUTION", text="{}x{}".format(self.pyd.RESOLUTION[0], self.pyd.RESOLUTION[1]))
+            self.title_canvas.itemconfigure("FULLSCREEN_CHECKBOX", image=self.pyd.CHECKBOX_BLANK)
+
+            
 
         self.pyd.FULLSCREEN = self.fullscreen_toggle
 
