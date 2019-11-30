@@ -1,12 +1,12 @@
 {
     "resolution": [
-        1920,
-        1080
+        1280,
+        720
     ],
-    "fullscreen": true,
+    "fullscreen": false,
     "client_name": "Player",
     "texture_pack": "default_texture",
-    "rich_presence": false,
+    "rich_presence": true,
     "debug": false,
     "server_address": "pydefence.tk"
 }
