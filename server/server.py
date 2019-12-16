@@ -15,16 +15,16 @@ import time
 import json
 import random
 import string
+import datetime
 
 #Required libraries
 try:
     import tkinter as tk
     import _thread as thr
-    import configparser as cp
 except:
     #Writing logs if import fails
     temp_file = open("FATAL-SERVER-LAUNCH-{}.txt".format(random.randint(0,10**10)), 'w')
-    temp_file.write("A fatal launch error occurred, ensure you have the required packages\n\nGet required packages:\n\t-_thread\n\t-tkinter\n\t-configparser")
+    temp_file.write("A fatal launch error occurred, ensure you have the required packages\n\nGet required packages:\n\t-_thread\n\t-tkinter")
     temp_file.close()
 
     quit()
@@ -39,6 +39,11 @@ STANDARD_ERRORS = {
     }
 }
 
+def log(msg):
+    print(str(datetime.datetime.now().isoformat())+" >>> "+msg)
+
+    open('log.log', 'a').write(str(datetime.datetime.now().isoformat())+" >>> "+msg+"\n")
+
 class DistributionServer():
     #Object to store all server tasks
 
@@ -50,7 +55,7 @@ class DistributionServer():
         self.BACKLOG_LEN = 64
         self.EOMT_ID = "\EOMT;;"
         self.buffer_size = 1024
-        self.live = False
+        self.live = True
         self.clients = {}
         self.active_lobbies = {}
 
@@ -58,22 +63,16 @@ class DistributionServer():
         #Start the server and bind application to a socket object
         self.SocketObject = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         
-        while not self.live:
-            try:
-                self.SocketObject.bind(self.address)
-            except Exception as e:
-                #Handles socket binding errors
-                print("Server startup error: \n\t{}".format(e))
+        try:
+            self.SocketObject.bind(self.address)
+        except OSError:
+            #Handles binding to a used port
+            log("Server already running on that port")
+            quit()
 
-                #Retry server startup
-                time.sleep(30)
-                continue
+        self.SocketObject.listen(self.BACKLOG_LEN) #queues connections
 
-            self.SocketObject.listen(self.BACKLOG_LEN) #queues connections
-
-            print("Server started!", self.address)
-
-            self.live = True
+        log("Server started!" + str(self.address))
 
         #Handles pending connections in the queue starting threads for handshakes
         while self.live:
@@ -140,17 +139,17 @@ class DistributionServer():
                     #Start game handler with client
                     self.gameHandler(client_id)
                 else:
-                    print(client_data, "expected 'confirm' aim")
+                    log(datetime.datetime.now().isoformat()+ str(client_data)+"expected 'confirm' aim")
                     raise ConnectionError
 
 
-                print(str(address)+" connected")
+                log(str(address)+" connected")
             else:
-                print(client_data, "expected 'connect' aim")
+                log(client_data + "expected 'connect' aim")
                 raise ConnectionError
 
         except:
-            print(str(address), "invalid handshake")
+            log(str(address)+" invalid handshake")
             
             #Remove invalid client as handshake was invalid
             try:self.clients.pop(client_id, None)
@@ -170,6 +169,9 @@ class DistributionServer():
 
         #Get dictionary from string response, minus the end of msg transmission ID      
         client_response = json.loads(client_response[:-len(self.EOMT_ID)])
+
+
+        log(client_response)
 
         #Return the client's message
         return client_response
@@ -283,7 +285,7 @@ class DistributionServer():
             pass
             
         #Handle client disconnects/errors
-        print(str(self.clients[str(client_id)]["address"])+" disconnected")
+        log(str(self.clients[str(client_id)]["address"])+" disconnected")
         
 
         #If lobby is empty remove it
@@ -299,45 +301,34 @@ class DistributionServer():
 
 class ServerGUI():
     def __init__(self):
-        #Get server config settings
-        parser = cp.ConfigParser()
-        parser.read('server/server.cfg')
-
-        server_name = parser.get('settings', 'server_name')
-
         #Create server object
-        self.ds = DistributionServer(server_name, ("localhost", 1000))
+        self.ds = DistributionServer("PYD_DS_UK_01", ("192.168.1.95", 1000))
         self.root = tk.Tk()
 
         #Server UI
         self.root.resizable(0,0)
-        self.root.attributes("-topmost", parser.get('settings', 'window_topmost'))
-        self.root.title("PYD Server Manager | {}".format(self.ds.name))
+        self.root.attributes("-topmost", 1)
+        self.root.title("PYD Server Manager")
 
-
-        tk.Frame(self.root, width=600, height=10).grid(row=0, column=0, columnspan=3, sticky=tk.N)
-
-        self.status_bar = tk.Frame(self.root, bg="grey", width=600, height=3)
-        self.status_bar.grid(row=0, column=0, columnspan=3, sticky=tk.N)
-        
-        tk.Label(self.root, text="Clients connected").grid(row=1, column=0)
+        tk.Label(self.root, text="Clients connected").grid(row=0, column=0)
         self.clients_ds = tk.Listbox(self.root, width=25, height=30)
-        self.clients_ds.grid(row=2, column=0)
+        self.clients_ds.grid(row=1, column=0)
         self.total_clients_ds = tk.Label(self.root, text="Total: 0")
-        self.total_clients_ds.grid(row=3, column=0)
+        self.total_clients_ds.grid(row=2, column=0)
 
-        tk.Label(self.root, text="Clients in-game").grid(row=1, column=1)
+        tk.Label(self.root, text="Clients in-game").grid(row=0, column=1)
         self.clients_game = tk.Listbox(self.root, width=40, height=30)
-        self.clients_game.grid(row=2, column=1)
+        self.clients_game.grid(row=1, column=1)
         self.total_clients_game = tk.Label(self.root, text="Total: 0")
-        self.total_clients_game.grid(row=3, column=1)
+        self.total_clients_game.grid(row=2, column=1)
 
-        tk.Label(self.root, text="Lobby Servers").grid(row=1, column=2)
+        tk.Label(self.root, text="Lobby Servers").grid(row=0, column=2)
         self.lobbies_live = tk.Listbox(self.root, width=30, height=30)
-        self.lobbies_live.grid(row=2, column=2)
+        self.lobbies_live.grid(row=1, column=2)
         self.total_lobbies = tk.Label(self.root, text="Total: 0")
-        self.total_lobbies.grid(row=3, column=2)
+        self.total_lobbies.grid(row=2, column=2)
 
+        tk.Label(self.root, text="Online | {}".format(self.ds.name), bg="limegreen", fg="white").grid(row=3, column=0, columnspan=3, sticky=tk.W)
 
         #Launch variable monitor
         thr.start_new_thread(self.guiManager, ())
@@ -348,13 +339,6 @@ class ServerGUI():
 
         #While the program is live update the UI with the state of the variables
         while True:
-
-            #Update status label
-            if self.ds.live:
-                self.status_bar.config(bg="limegreen")
-            else:
-                self.status_bar.config(bg="red")
-
             #Clear listboxes
             self.clients_ds.delete(0, tk.END)
             self.clients_game.delete(0, tk.END)
