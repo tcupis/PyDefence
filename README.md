@@ -10,8 +10,15 @@ as the main game.
 ## Setting up the game:
 ```
 [Windows]: run 'get-required-packages.bat'
-[PIP]: pip install pillow 
+[PIP]: pip install pillow
+[PIP]: pip install pygame
 ```
+### Running the game
+PyDefence now uses the Pygame engine. Launch with:
+```
+python pygame_main.py
+```
+Click on a map tile to place archer towers and defend the base.
 
 ## Modding notes:
 
@@ -41,5 +48,4 @@ Please visit https://tcupis.itch.io/pydefence for updates and patches.
 
 Server notes:
 The server file can be found in the server folder.
-The server uses port 1000 [TCP] by default and the client can
-be configured to join a domain/ip of your choice.
+The server uses port 1000 [TCP] by default and the client can be configured to join a domain/ip of your choice.

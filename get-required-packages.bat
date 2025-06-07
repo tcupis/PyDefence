@@ -1,6 +1,6 @@
-py -m pip install pillow
-python -m pip install pillow
-pip install pillow
+py -m pip install pillow pygame
+python -m pip install pillow pygame
+pip install pillow pygame
 cls
 echo Install attempt complete
 pause
